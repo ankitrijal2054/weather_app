@@ -1,0 +1,42 @@
+/* Weather.css */
+
+.weather-app-container {
+  max-width: 500px;
+  margin: 50px auto;
+  padding: 20px;
+}
+
+.weather-app-header {
+  text-align: center;
+  color: #007bff;
+}
+
+.weather-input-group {
+  margin-top: 20px;
+}
+
+.weather-button {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.weather-data {
+  margin-top: 30px;
+  text-align: center;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.weather-data h2 {
+  font-weight: bold;
+}
+
+.weather-data p {
+  margin: 5px 0;
+}
+
+.temperature {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #ff6b6b;
+}
