@@ -5,7 +5,9 @@ function Weather() {
   const [weatherData, setWeatherData] = useState(null);
 
   const getWeatherByZip = async () => {
-    const response = await fetch(`http://127.0.0.1:5000/weather?zip=${zip}`);
+    const response = await fetch(
+      `https://weather-app-d50z.onrender.com/weather?zip=${zip}`
+    );
     const data = await response.json();
     setWeatherData(data);
   };
@@ -14,7 +16,7 @@ function Weather() {
     navigator.geolocation.getCurrentPosition(async (position) => {
       const { latitude, longitude } = position.coords;
       const response = await fetch(
-        `http://127.0.0.1:5000/weather?lat=${latitude}&lon=${longitude}`
+        `https://weather-app-d50z.onrender.com/weather?lat=${latitude}&lon=${longitude}`
       );
       const data = await response.json();
       setWeatherData(data);
