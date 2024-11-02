@@ -8,6 +8,10 @@ CORS(app)  # Enable CORS for all routes
 
 WEATHER_API_KEY = os.environ.get('WEATHER_API_KEY')
 
+@app.route('/')
+def home():
+    return "Weather API is live!"
+
 @app.route('/weather', methods=['GET'])
 def get_weather():
     zip_code = request.args.get('zip')
