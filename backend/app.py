@@ -5,13 +5,16 @@ import requests
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
 
-WEATHER_API_KEY = '82d718fb815683bfea15c789bf345d10'  # Replace with your API key
+WEATHER_API_KEY = os.environ.get('WEATHER_API_KEY')
 
 @app.route('/weather', methods=['GET'])
 def get_weather():
     zip_code = request.args.get('zip')
     lat = request.args.get('lat')
     lon = request.args.get('lon')
+
+    if not WEATHER_API_KEY:
+        return jsonify({"error": "API key not set"}), 500
     
     if zip_code:
         url = f"http://api.openweathermap.org/data/2.5/weather?zip={zip_code}&appid={WEATHER_API_KEY}&units=imperial"
