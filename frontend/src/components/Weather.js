@@ -1,12 +1,15 @@
 import React, { useState } from "react";
-import "../styles/Weather.css"; // Import the custom CSS file
+import "../styles/Weather.css";
 
 function Weather() {
   const [zip, setZip] = useState("");
   const [weatherData, setWeatherData] = useState(null);
   const [error, setError] = useState(null);
+  const [isCelsius, setIsCelsius] = useState(false);
+  const [loading, setLoading] = useState(false); // Add loading state
 
   const getWeatherByZip = async () => {
+    setLoading(true); // Start loading
     try {
       const response = await fetch(
         `https://weather-app-d50z.onrender.com/weather?zip=${zip}`
@@ -18,15 +21,18 @@ function Weather() {
 
       const data = await response.json();
       setWeatherData(data);
-      setError(null); // Clear any previous error message
+      setError(null);
     } catch (err) {
-      setWeatherData(null); // Clear any previous weather data
+      setWeatherData(null);
       setError(err.message);
+    } finally {
+      setLoading(false); // End loading
     }
   };
 
   const getWeatherByLocation = () => {
     setZip("");
+    setLoading(true); // Start loading
     navigator.geolocation.getCurrentPosition(async (position) => {
       const { latitude, longitude } = position.coords;
       try {
@@ -40,12 +46,22 @@ function Weather() {
 
         const data = await response.json();
         setWeatherData(data);
-        setError(null); // Clear any previous error message
+        setError(null);
       } catch (err) {
         setWeatherData(null);
         setError(err.message);
+      } finally {
+        setLoading(false); // End loading
       }
     });
+  };
+
+  const convertTemperature = (temp) => {
+    return isCelsius ? ((temp - 32) * 5) / 9 : temp;
+  };
+
+  const toggleTemperatureUnit = () => {
+    setIsCelsius(!isCelsius);
   };
 
   return (
@@ -63,24 +79,55 @@ function Weather() {
           <button
             className="btn btn-primary"
             onClick={getWeatherByZip}
-            disabled={!zip} // Enable only if zip code is entered
+            disabled={!zip || loading}
           >
-            Get Weather
+            {loading ? "Loading..." : "Get Weather"}
           </button>
         </div>
       </div>
       <button
         className="btn btn-secondary weather-button"
         onClick={getWeatherByLocation}
+        disabled={loading}
       >
-        Get Weather by Location
+        {loading ? "Loading..." : "Get Weather by Location"}
       </button>
+      {loading && <div className="loading">Loading data...</div>}{" "}
+      {/* Loading indicator */}
       {error && <p className="error-message">{error}</p>}
-      {weatherData && weatherData.main && weatherData.weather && (
+      {weatherData && weatherData.main && weatherData.weather && !loading && (
         <div className="weather-data">
           <h2>{weatherData.name}</h2>
-          <p className="temperature">Temperature: {weatherData.main.temp}°F</p>
+          <p className="temperature">
+            Temperature: {convertTemperature(weatherData.main.temp).toFixed(1)}°
+            {isCelsius ? "C" : "F"}
+          </p>
+          <p>
+            Feels Like:{" "}
+            {convertTemperature(weatherData.main.feels_like).toFixed(1)}°
+            {isCelsius ? "C" : "F"}
+          </p>
+          <p>
+            Highest: {convertTemperature(weatherData.main.temp_max).toFixed(1)}°
+            {isCelsius ? "C" : "F"}
+          </p>
+          <p>
+            Lowest: {convertTemperature(weatherData.main.temp_min).toFixed(1)}°
+            {isCelsius ? "C" : "F"}
+          </p>
           <p>Condition: {weatherData.weather[0].description}</p>
+          <p>Humidity: {weatherData.main.humidity}%</p>
+          <p>
+            Sunrise:{" "}
+            {new Date(weatherData.sys.sunrise * 1000).toLocaleTimeString()}
+          </p>
+          <p>
+            Sunset:{" "}
+            {new Date(weatherData.sys.sunset * 1000).toLocaleTimeString()}
+          </p>
+          <button className="toggle-button" onClick={toggleTemperatureUnit}>
+            °{isCelsius ? "F" : "C"}
+          </button>
         </div>
       )}
     </div>

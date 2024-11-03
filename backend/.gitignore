@@ -3,5 +3,3 @@ __pycache__/
 *.pyc
 venv/
 
-# Node
-node_modules/
