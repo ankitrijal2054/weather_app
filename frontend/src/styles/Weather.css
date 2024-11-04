@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Rokkitt:wght@400;700&display=swap");
+
 /* Full-Screen Gradient Backgrounds */
 body.rainy-bg {
   background: linear-gradient(135deg, #4e54c8, #8f94fb);
@@ -34,8 +36,9 @@ body.clear-bg {
 .weather-app-header {
   text-align: center;
   color: #67abf3;
-  font-size: 3rem;
+  font-size: 4rem;
   margin-bottom: 20px;
+  font-family: "Rokkitt", serif;
 }
 
 /* Modernized Input Section */
