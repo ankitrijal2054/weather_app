@@ -15,14 +15,24 @@ function Weather() {
   const getWeatherByZip = async () => {
     setLoading(true);
     try {
+      // Fetch location data first
+      const locationData = await getLocationData(zip);
+      if (!locationData) return; // Exit if location data could not be retrieved
+
+      // Fetch weather data
       const response = await fetch(
         `https://weather-app-d50z.onrender.com/weather?zip=${zip}`
       );
       if (!response.ok) {
         throw new Error("Invalid zip code. Please try again.");
       }
-      const data = await response.json();
-      setWeatherData(data);
+      const weatherData = await response.json();
+
+      // Combine location and weather data
+      setWeatherData({
+        ...weatherData,
+        ...locationData,
+      });
       setError(null);
     } catch (err) {
       setWeatherData(null);
@@ -44,6 +54,7 @@ function Weather() {
         const locationZip = locationData.postcode;
 
         if (!locationZip) {
+          setWeatherData(null);
           throw new Error("Unable to retrieve zip code for your location.");
         }
 
@@ -55,6 +66,24 @@ function Weather() {
     });
   };
 
+  // Function to get city, state, country by ZIP code
+  const getLocationData = async (zip) => {
+    try {
+      const response = await fetch(`http://api.zippopotam.us/us/${zip}`);
+      if (!response.ok) throw new Error("Invalid ZIP code or unsupported area");
+      const data = await response.json();
+
+      return {
+        city: data.places[0]["place name"],
+        state: data.places[0]["state"],
+        country: data.country,
+      };
+    } catch (err) {
+      setError("Please enter a valid zipcode");
+      return null;
+    }
+  };
+
   const convertTemperature = (temp) => {
     return isCelsius ? ((temp - 32) * 5) / 9 : temp;
   };
@@ -64,13 +93,13 @@ function Weather() {
   };
 
   const getBackgroundClass = useCallback(() => {
-    if (!weatherData || !weatherData.weather) return "";
+    if (!weatherData || !weatherData.weather) return "default-bg";
     const mainCondition = weatherData.weather[0].main.toLowerCase();
     if (mainCondition.includes("rain")) return "rainy-bg";
     if (mainCondition.includes("cloud")) return "cloudy-bg";
     if (mainCondition.includes("thunderstorm")) return "thunderstorm-bg";
     if (mainCondition.includes("snow")) return "snowy-bg";
-    return "clear-bg"; // Default background
+    return "clear-bg";
   }, [weatherData]);
 
   useEffect(() => {
@@ -113,10 +142,14 @@ function Weather() {
       </div>
 
       <div className="result-section">
+        {console.log(weatherData)}
         {weatherData && weatherData.main && weatherData.weather && !loading ? (
           <div className="card result-card modern-result-card shadow-sm p-4">
             <div className="weather-data">
-              <h2 className="city-name">{weatherData.name}</h2>
+              <h2 className="city-name">
+                {weatherData.city}, {weatherData.state}, {weatherData.country}
+              </h2>
+
               <p className="temperature">
                 {convertTemperature(weatherData.main.temp).toFixed(1)}°
                 {isCelsius ? "C" : "F"}
