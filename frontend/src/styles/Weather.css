@@ -1,12 +1,26 @@
+/* Container and Layout */
 .weather-app-container {
-  max-width: 500px;
+  max-width: 600px;
   margin: 50px auto;
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .weather-app-header {
   text-align: center;
   color: #007bff;
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+/* Input Section */
+.input-card,
+.result-card {
+  padding: 20px;
+  border-radius: 8px;
+  background: #f8f9fa;
 }
 
 .weather-input-group {
@@ -18,8 +32,26 @@
   margin-top: 10px;
 }
 
+.loading {
+  text-align: center;
+  color: #007bff;
+  font-size: 1.2rem;
+  margin-top: 20px;
+}
+
+.error-message {
+  color: red;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.info-message {
+  text-align: center;
+  color: #666;
+}
+
+/* Weather Data Display */
 .weather-data {
-  margin-top: 30px;
   text-align: center;
   font-size: 1.2rem;
   color: #333;
@@ -41,12 +73,6 @@
   color: #ff6b6b;
 }
 
-.error-message {
-  color: red;
-  text-align: center;
-  margin-top: 10px;
-}
-
 .toggle-button {
   margin-top: 10px;
   padding: 8px 16px;
@@ -63,9 +89,72 @@
   background-color: #0056b3;
 }
 
-.loading {
-  text-align: center;
-  color: #007bff;
-  font-size: 1.2rem;
-  margin-top: 20px;
+/* Weather Condition Backgrounds */
+.result-card.rainy-bg {
+  background: #a1c4fd;
+  background-image: url("../assets/rain.gif"); /* Replace with actual path to rain animation GIF */
+  background-size: cover;
+}
+
+.result-card.cloudy-bg {
+  background: #d3d3d3;
+  background-image: url("../assets/cloudy.gif"); /* Replace with actual path to cloudy animation GIF */
+  background-size: cover;
+}
+
+.result-card.thunderstorm-bg {
+  background: #000;
+  background-image: url("../assets/storm.gif"); /* Replace with actual path to thunderstorm animation GIF */
+  background-size: cover;
+}
+
+.result-card.snowy-bg {
+  background: #e0f7fa;
+  background-image: url("../assets/snow.gif"); /* Replace with actual path to snow animation GIF */
+  background-size: cover;
+}
+
+.result-card.clear-bg {
+  background: #87ceeb;
+}
+
+/* Keyframe Animations */
+@keyframes rainAnimation {
+  0%,
+  100% {
+    opacity: 0.9;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes cloudyAnimation {
+  0%,
+  100% {
+    opacity: 0.85;
+  }
+  50% {
+    opacity: 0.65;
+  }
+}
+
+@keyframes thunderstormAnimation {
+  0%,
+  100% {
+    opacity: 0.9;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+@keyframes snowAnimation {
+  0%,
+  100% {
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 0.6;
+  }
 }
