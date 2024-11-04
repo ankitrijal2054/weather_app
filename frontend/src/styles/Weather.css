@@ -92,69 +92,28 @@
 /* Weather Condition Backgrounds */
 .result-card.rainy-bg {
   background: #a1c4fd;
-  background-image: url("../assets/rain.gif"); /* Replace with actual path to rain animation GIF */
+  background-image: url("../assets/rain.gif");
   background-size: cover;
 }
 
 .result-card.cloudy-bg {
   background: #d3d3d3;
-  background-image: url("../assets/cloudy.gif"); /* Replace with actual path to cloudy animation GIF */
+  background-image: url("../assets/cloudy.gif");
   background-size: cover;
 }
 
 .result-card.thunderstorm-bg {
   background: #000;
-  background-image: url("../assets/storm.gif"); /* Replace with actual path to thunderstorm animation GIF */
+  background-image: url("../assets/storm.gif");
   background-size: cover;
 }
 
 .result-card.snowy-bg {
   background: #e0f7fa;
-  background-image: url("../assets/snow.gif"); /* Replace with actual path to snow animation GIF */
+  background-image: url("../assets/snow.gif");
   background-size: cover;
 }
 
 .result-card.clear-bg {
   background: #87ceeb;
-}
-
-/* Keyframe Animations */
-@keyframes rainAnimation {
-  0%,
-  100% {
-    opacity: 0.9;
-  }
-  50% {
-    opacity: 0.7;
-  }
-}
-
-@keyframes cloudyAnimation {
-  0%,
-  100% {
-    opacity: 0.85;
-  }
-  50% {
-    opacity: 0.65;
-  }
-}
-
-@keyframes thunderstormAnimation {
-  0%,
-  100% {
-    opacity: 0.9;
-  }
-  50% {
-    opacity: 0.4;
-  }
-}
-
-@keyframes snowAnimation {
-  0%,
-  100% {
-    opacity: 0.8;
-  }
-  50% {
-    opacity: 0.6;
-  }
 }
