@@ -2,6 +2,8 @@ import React, { useState, useEffect, useCallback } from "react";
 import "../styles/Weather.css";
 import { FaLocationCrosshairs } from "react-icons/fa6";
 import logo from "../assets/logo.png";
+import sunriseIcon from "../assets/sunrise.png";
+import sunsetIcon from "../assets/sunset.png";
 
 function Weather() {
   const [zip, setZip] = useState("");
@@ -116,7 +118,6 @@ function Weather() {
             <div className="weather-data">
               <h2 className="city-name">{weatherData.name}</h2>
               <p className="temperature">
-                Temperature:{" "}
                 {convertTemperature(weatherData.main.temp).toFixed(1)}°
                 {isCelsius ? "C" : "F"}
               </p>
@@ -134,13 +135,40 @@ function Weather() {
                 Condition: {weatherData.weather[0].description}
               </p>
               <p className="humidity">Humidity: {weatherData.main.humidity}%</p>
-              <p className="sun-times">
-                Sunrise:{" "}
-                {new Date(weatherData.sys.sunrise * 1000).toLocaleTimeString()}
-                <br />
-                Sunset:{" "}
-                {new Date(weatherData.sys.sunset * 1000).toLocaleTimeString()}
-              </p>
+              <div className="sun-times">
+                <div className="sun-time">
+                  <img
+                    src={sunriseIcon}
+                    alt="Sunrise Icon"
+                    className="sun-icon"
+                  />
+                  <p>
+                    {new Date(
+                      weatherData.sys.sunrise * 1000
+                    ).toLocaleTimeString([], {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
+                  </p>
+                </div>
+                <div className="sun-time">
+                  <img
+                    src={sunsetIcon}
+                    alt="Sunset Icon"
+                    className="sun-icon"
+                  />
+                  <p>
+                    {new Date(weatherData.sys.sunset * 1000).toLocaleTimeString(
+                      [],
+                      {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      }
+                    )}
+                  </p>
+                </div>
+              </div>
+
               <button
                 className="toggle-button modern-toggle"
                 onClick={toggleTemperatureUnit}
