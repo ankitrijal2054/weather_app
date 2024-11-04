@@ -21,6 +21,12 @@ body.clear-bg {
   background: linear-gradient(135deg, #89f7fe, #66a6ff);
 }
 
+.weather-logo {
+  width: 100px;
+  height: auto;
+  margin-bottom: 0;
+}
+
 /* Container and Layout */
 .weather-app-container {
   max-width: 600px;
@@ -29,7 +35,7 @@ body.clear-bg {
   padding: 20px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 5px;
   align-items: center;
 }
 
@@ -37,7 +43,7 @@ body.clear-bg {
   text-align: center;
   color: #67abf3;
   font-size: 4rem;
-  margin-bottom: 20px;
+  margin: 5px 0 20px;
   font-family: "Rokkitt", serif;
 }
 

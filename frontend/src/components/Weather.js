@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import "../styles/Weather.css";
 import { FaLocationCrosshairs } from "react-icons/fa6";
+import logo from "../assets/logo.png";
 
 function Weather() {
   const [zip, setZip] = useState("");
@@ -76,6 +77,7 @@ function Weather() {
 
   return (
     <div className="weather-app-container">
+      <img src={logo} alt="Weather App Logo" className="weather-logo" />
       <h1 className="weather-app-header">Weather App</h1>
       <div className="input-section card shadow-sm p-4">
         <div className="input-group weather-input-group">
