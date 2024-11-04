@@ -46,19 +46,23 @@ function Weather() {
     navigator.geolocation.getCurrentPosition(async (position) => {
       const { latitude, longitude } = position.coords;
       try {
-        // Reverse geolocation API to get the zip code from latitude and longitude
-        const locationResponse = await fetch(
-          `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`
+        const response = await fetch(
+          "`https://weather-app-d50z.onrender.com/get-zipcode",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ latitude, longitude }),
+          }
         );
-        const locationData = await locationResponse.json();
-        const locationZip = locationData.postcode;
 
-        if (!locationZip) {
+        const data = await response.json();
+
+        if (!response.ok) {
           setWeatherData(null);
-          throw new Error("Unable to retrieve zip code for your location.");
+          throw new Error(data.error || "Unable to retrieve zip code.");
         }
 
-        setZip(locationZip); // Set zip code field with the detected zip
+        setZip(data.zipcode); // Set zip code field with the detected zip
       } catch (err) {
         setWeatherData(null);
         setError(err.message);
@@ -66,20 +70,22 @@ function Weather() {
     });
   };
 
-  // Function to get city, state, country by ZIP code
   const getLocationData = async (zip) => {
     try {
-      const response = await fetch(`http://api.zippopotam.us/us/${zip}`);
+      const response = await fetch(
+        `https://weather-app-d50z.onrender.com/get_location_data?zip=${zip}`
+      );
       if (!response.ok) throw new Error("Invalid ZIP code or unsupported area");
+
       const data = await response.json();
 
       return {
-        city: data.places[0]["place name"],
-        state: data.places[0]["state"],
+        city: data.city,
+        state: data.state,
         country: data.country,
       };
     } catch (err) {
-      setError("Please enter a valid zipcode");
+      setError("Please enter a valid ZIP code");
       return null;
     }
   };
@@ -222,7 +228,7 @@ function Weather() {
       </div>
       <footer className="footer">
         <a
-          href="https://github.com/ankitrijal2054/weather_app" // Replace this with your desired URL
+          href="https://github.com/ankitrijal2054/weather_app"
           target="_blank"
           rel="noopener noreferrer"
           className="footer-link"
