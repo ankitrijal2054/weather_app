@@ -108,7 +108,16 @@ function Weather() {
 
   return (
     <div className="weather-app-container">
-      <img src={logo} alt="Weather App Logo" className="weather-logo" />
+      <img
+        src={logo}
+        alt="Weather App Logo"
+        className="weather-logo"
+        onClick={() => {
+          setWeatherData(null);
+          setZip("");
+        }}
+        style={{ cursor: "pointer" }}
+      />
       <h1 className="weather-app-header">Weather App</h1>
       <div className="input-section card shadow-sm p-4">
         <div className="input-group weather-input-group">
@@ -142,7 +151,6 @@ function Weather() {
       </div>
 
       <div className="result-section">
-        {console.log(weatherData)}
         {weatherData && weatherData.main && weatherData.weather && !loading ? (
           <div className="card result-card modern-result-card shadow-sm p-4">
             <div className="weather-data">
@@ -212,6 +220,16 @@ function Weather() {
           </div>
         ) : null}
       </div>
+      <footer className="footer">
+        <a
+          href="https://github.com/ankitrijal2054/weather_app" // Replace this with your desired URL
+          target="_blank"
+          rel="noopener noreferrer"
+          className="footer-link"
+        >
+          Created by Ankit Rijal
+        </a>
+      </footer>
     </div>
   );
 }
