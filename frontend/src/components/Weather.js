@@ -11,6 +11,7 @@ function Weather() {
   const [error, setError] = useState(null);
   const [isCelsius, setIsCelsius] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [locLoading, setlocLoading] = useState(false);
 
   const getWeatherByZip = async () => {
     setLoading(true);
@@ -43,11 +44,13 @@ function Weather() {
   };
 
   const getZipCodeByLocation = () => {
+    setlocLoading(true);
+    setError(null);
     navigator.geolocation.getCurrentPosition(async (position) => {
       const { latitude, longitude } = position.coords;
       try {
         const response = await fetch(
-          "`https://weather-app-d50z.onrender.com/get-zipcode",
+          "https://weather-app-d50z.onrender.com/get-zipcode",
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -66,6 +69,8 @@ function Weather() {
       } catch (err) {
         setWeatherData(null);
         setError(err.message);
+      } finally {
+        setlocLoading(false);
       }
     });
   };
@@ -85,6 +90,7 @@ function Weather() {
         country: data.country,
       };
     } catch (err) {
+      setWeatherData(null);
       setError("Please enter a valid ZIP code");
       return null;
     }
@@ -153,6 +159,9 @@ function Weather() {
           </div>
         </div>
         {loading && <div className="loading">Loading data...</div>}
+        {locLoading && (
+          <div className="loading">Getting current location zipcode...</div>
+        )}
         {error && <p className="error-message">{error}</p>}
       </div>
 

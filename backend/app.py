@@ -55,8 +55,10 @@ def get_zipcode():
         )
         response.raise_for_status()
         location_data = response.json()
+        
+        # Extract the postcode or handle the case where it might be absent
         location_zip = location_data.get("postcode")
-
+        
         if not location_zip:
             return jsonify({"error": "Unable to retrieve zip code for the provided location"}), 404
 
