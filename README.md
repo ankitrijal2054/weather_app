@@ -26,7 +26,7 @@ Ensure you have the following installed:
 ### Backend Setup
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/weather-app.git
+   git clone https://github.com/ankitrijal2054/weather_app.git
    cd weather-app/backend
    ```
 2. Create a virtual environment:
