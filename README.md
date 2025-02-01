@@ -19,7 +19,7 @@ The Weather App is a fully responsive web application that provides real-time we
 
 ### Weather Details
 
-![Weather Details](screenshots/wather.png)
+![Weather Details](screenshots/weather.png)
 
 ## Technologies Used
 
